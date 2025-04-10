@@ -1,0 +1,44 @@
+<form [formGroup]="group" class="login-form">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title class="text-center">Bienvenido</mat-card-title>
+      <mat-card-subtitle class="text-center">
+        Inicia sesión para acceder a la plataforma
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="Ingrese su correo"
+        />
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          placeholder="Ingrese su contraseña"
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="warn"
+        class="full-width"
+        [disabled]="group.invalid"
+        (click)="login()"
+      >
+        Iniciar Sesión
+      </button>
+    </mat-card-content>
+  </mat-card>
+</form>

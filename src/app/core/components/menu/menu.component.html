@@ -1,0 +1,10 @@
+<nav class="menu-container">
+  <ul>
+    <li *ngFor="let menu of listMenu">
+      <a [routerLink]="menu.url" class="menu-item">
+        <mat-icon [svgIcon]="menu.icon"></mat-icon>
+        <span>{{ menu.title }}</span>
+      </a>
+    </li>
+  </ul>
+</nav>

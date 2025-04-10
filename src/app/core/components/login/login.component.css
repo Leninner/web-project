@@ -1,0 +1,100 @@
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+mat-card {
+  background: white;
+  padding: 2rem;
+}
+
+mat-card-header {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-card-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+mat-card-subtitle {
+  color: #64748b;
+  font-size: 1rem;
+  text-align: center;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+:host ::ng-deep {
+  .mat-form-field-wrapper {
+    margin-bottom: 0.5rem;
+  }
+
+  .mat-form-field-outline {
+    background: #f8fafc;
+  }
+
+  .mat-form-field-infix {
+    padding: 0.75rem 0;
+  }
+}
+
+button[mat-raised-button] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: #1a73e8;
+  color: white;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+button[mat-raised-button]:hover:not([disabled]) {
+  background: #1557b0;
+}
+
+button[mat-raised-button][disabled] {
+  background: #e2e8f0;
+  color: #94a3b8;
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: #dc2626;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error-message mat-icon {
+  font-size: 1.25rem;
+}
+
+.form-footer {
+  margin-top: 2rem;
+  text-align: center;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.form-footer a {
+  color: #1a73e8;
+  text-decoration: none;
+  margin-left: 0.5rem;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,66 @@
+.main-wrapper {
+  height: calc(100vh - 64px);
+  display: flex;
+  background: #f8f9fa;
+}
+
+.system-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: #1a73e8;
+  color: white;
+}
+
+.system-info mat-icon {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.system-info h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.system-info p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  max-width: 480px;
+}
+
+.login-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .main-wrapper {
+    flex-direction: column;
+  }
+
+  .system-info {
+    padding: 3rem 2rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .system-info h2 {
+    font-size: 2rem;
+  }
+
+  .system-info p {
+    font-size: 1rem;
+  }
+
+  .login-container {
+    padding: 2rem 1.5rem;
+  }
+}
