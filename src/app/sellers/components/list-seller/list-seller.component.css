@@ -1,0 +1,96 @@
+/* Estilo para la lista de vendedores */
+*{
+    color: #000;
+}
+
+.title {
+  display: flex;
+  justify-content: center;   /* Centra horizontalmente */
+  align-items: center;       /* Centra verticalmente */
+  width: 100%;
+  height: 60px;              /* Puedes ajustar el alto si necesitas */
+  margin-top: 20px;
+}
+
+.title>h4{
+  border-radius: 0 10px;
+  background-color: rgb(168, 203, 176);
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 15px;
+
+}
+
+
+.seller-list {
+    background-color: white !important; /* Forzar fondo blanco */
+    padding: 16px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+  }
+  
+  .seller-list-row{
+    margin: 10px 10%;
+  }
+  /* Estilo para la tabla */
+  table.mat-table {
+    background-color: rgb(44, 36, 36) !important; /* Fondo blanco de la tabla */
+    border-radius: 8px;  
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  mat-header-cell, mat-cell {
+    background-color: white !important; /* Fondo blanco en las celdas */
+    color: rgb(255, 255, 255) !important; /* Texto negro */
+    padding: 8px 16px; /* Espaciado en las celdas */
+    text-align: left; /* Alineación del texto */
+  }
+  
+  /* Estilo para los botones */
+  button.mat-raised-button, button.mat-icon-button {
+    background-color: white !important; 
+    border-radius: 4px; 
+  }
+  
+  button.mat-raised-button:hover, button.mat-icon-button:hover {
+    opacity: 0.8; /* Efecto al pasar el ratón */
+  }
+  
+  /* Estilo para los modales (Formulario y Confirmación) */
+  app-seller-form, app-confirmation-modal {
+    background-color: white !important; /* Fondo blanco en los modales */
+    color: black !important; /* Texto negro */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  /* Estilo para las acciones del modal */
+  mat-dialog-actions {
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background-color: white !important; /* Fondo blanco para las acciones */
+  }
+  
+  /* Estilo para el contenedor del formulario */
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: white !important; /* Fondo blanco */
+    padding: 16px; /* Espacio interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  /* Asegura que los elementos tengan un ancho del 100% */
+  .full-width {
+    width: 80%;
+  }
+  
+  /* Estilo para el contenedor del modal de confirmación */
+  mat-dialog-container {
+    background-color: rgb(118, 114, 114) !important; /* Fondo blanco para el modal */
+    color: rgb(0, 0, 0) !important; /* Texto negro */
+  }
+  

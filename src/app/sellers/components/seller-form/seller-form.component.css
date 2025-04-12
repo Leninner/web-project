@@ -1,0 +1,115 @@
+/* Contenedor principal */
+*{
+    color: rgb(0, 0, 0);
+}
+
+.title {
+  display: flex;
+  justify-content: center;   /* Centra horizontalmente */
+  align-items: center;       /* Centra verticalmente */
+  width: 100%;
+  height: 60px;              /* Puedes ajustar el alto si necesitas */
+  background-color: rgb(168, 203, 176);
+  border-radius: 0 0 10px 10px;
+}
+
+.title>h4{
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio más grande entre los campos */
+    padding: 20px;
+    background-color: white; /* Fondo suave */
+
+    
+  }
+
+  
+  /* Estilos para los campos del formulario */
+  mat-form-field {
+    margin-bottom: 20px; /* Espacio más amplio entre los campos */
+  }
+  
+  mat-form-field .mat-form-field-label {
+    font-weight: bold; /* Etiquetas en negrita */
+    color: #1976d2; /* Color azul para las etiquetas */
+  }
+  
+  /* Bordes de los campos */
+  mat-form-field .mat-form-field-outline {
+    border-color: #1976d2; /* Color de borde azul */
+  }
+  
+  /* Efecto al enfocarse en los campos */
+  mat-form-field.mat-focused .mat-form-field-outline {
+    border-color: #2196f3 !important; /* Borde más brillante cuando está enfocado */
+  }
+  
+  mat-form-field input {
+    font-size: 14px; /* Tamaño de texto dentro de los inputs */
+    padding: 10px; /* Añadir espacio dentro de los inputs */
+  }
+  
+  /* Estilo para los botones dentro de mat-dialog-actions */
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px; /* Espacio entre los botones */
+    padding: 16px;
+    background-color: #f0f0f0; /* Fondo suave para los botones */
+    border-top: 2px solid #e0e0e0; /* Línea superior para separar los botones */
+  }
+  
+  /* Estilo para el botón cancelar */
+  button[mat-button] {
+    color: #757575; /* Color gris para el botón de cancelar */
+    font-weight: 600;
+  }
+  
+  /* Estilo para el botón de guardar */
+  button[mat-raised-button] {
+    background-color: #1976d2; /* Fondo azul para el botón */
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px; /* Espaciado dentro del botón */
+    border-radius: 4px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: all 0.3s ease-in-out; /* Animación suave */
+  }
+  
+  /* Efecto hover para el botón de guardar */
+  button[mat-raised-button]:hover {
+    background-color: #1565c0; /* Color azul más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Levantar ligeramente el botón */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Aumentar la sombra */
+  }
+  
+  /* Estilo para el botón de guardar deshabilitado */
+  button[mat-raised-button]:disabled {
+    background-color: #e0e0e0; /* Fondo gris cuando está deshabilitado */
+    color: #bdbdbd; /* Texto gris cuando está deshabilitado */
+    cursor: not-allowed; /* Cambiar el cursor cuando el botón está deshabilitado */
+  }
+  
+  /* Estilo para los inputs con errores */
+  mat-form-field.mat-form-field-invalid .mat-form-field-outline {
+    border-color: red !important; /* Borde rojo para los inputs inválidos */
+  }
+  
+  mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: red !important; /* Etiqueta roja para los inputs inválidos */
+  }
+  
+  mat-form-field .mat-form-field-infix input.mat-input-element:invalid {
+    border-color: red; /* Borde rojo cuando el input es inválido */
+  }
+  
+  /* Efecto al pasar el mouse sobre los campos */
+  mat-form-field:hover .mat-form-field-outline {
+    border-color: #2196f3; /* Borde azul cuando pasas el ratón */
+  }
+  
