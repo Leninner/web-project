@@ -1,0 +1,19 @@
+*{
+    color: black;
+  }
+  
+  .product-list-container {
+      padding: 20px;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .full-width-table {
+      width: 100%;
+    }
+    
