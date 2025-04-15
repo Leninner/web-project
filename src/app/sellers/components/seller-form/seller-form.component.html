@@ -1,11 +1,13 @@
+<h2 mat-dialog-title style="background-color: rgb(0, 0, 0);">{{ seller?.dni ? 'Editar Vendedor' : 'Agregar Vendedor' }}
+</h2>
 
-<h2 mat-dialog-title style="background-color: rgb(0, 0, 0);">{{ seller?.dni ? 'Editar Vendedor' : 'Agregar Vendedor' }}</h2>
+<content class="form-container">
+  <form *ngIf="sellerForm" [formGroup]="sellerForm">
 
-<content class="form-container" style="background-color: rgb(82, 80, 80);">
-  <form *ngIf="sellerForm" [formGroup]="sellerForm" style="background-color: rgba(0, 0, 0, 0); border-radius: 10px;">
-    <mat-form-field appearance="outline" class="full-width" style="border-radius: 10px;">
+
+    <mat-form-field appearance="outline" class="full-width">
       <label>DNI</label>
-      <input matInput  formControlName="dni">
+      <input matInput formControlName="dni">
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
