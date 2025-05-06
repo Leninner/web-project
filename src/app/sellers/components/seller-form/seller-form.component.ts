@@ -1,13 +1,22 @@
-import { Component, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, Inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-  selector: 'app-seller-form',
+  selector: "app-seller-form",
   standalone: true,
   imports: [
     CommonModule,
@@ -15,10 +24,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
-  templateUrl: './seller-form.component.html',
-  styleUrls: ['./seller-form.component.css']
+  templateUrl: "./seller-form.component.html",
+  styleUrls: ["./seller-form.component.css"],
 })
 export class SellerFormComponent {
   sellerForm: FormGroup;
@@ -29,11 +38,11 @@ export class SellerFormComponent {
     @Inject(MAT_DIALOG_DATA) public seller: any
   ) {
     this.sellerForm = this.fb.group({
-      dni: [this.seller?.dni || ''],
-      name: [this.seller?.name || ''],
-      lastname: [this.seller?.lastname || ''],
-      email: [this.seller?.email || ''],
-      phone: [this.seller?.phone || '']
+      dni: [this.seller?.dni || "", Validators.required],
+      name: [this.seller?.name || "", Validators.required],
+      lastname: [this.seller?.lastname || "", Validators.required],
+      email: [this.seller?.email || "", [Validators.email]],
+      phone: [this.seller?.phone || ""],
     });
   }
 
@@ -43,7 +52,7 @@ export class SellerFormComponent {
 
   onSave() {
     if (this.sellerForm.valid) {
-      this.dialogRef.close(this.sellerForm.value);
+      this.dialogRef.close({ ...this.seller, ...this.sellerForm.value });
     }
   }
 }

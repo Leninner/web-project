@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 export interface IMenu {
   title: string;
@@ -7,19 +7,19 @@ export interface IMenu {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class MenuService {
   private listMenu: IMenu[] = [
-    { title: 'Vendedores', url: '/sellers', icon: 'seller' },
-    { title: 'Clientes', url: '/clients', icon: 'client' },
-    { title: 'Productos', url: '/products', icon: 'product' },
-    { title: 'Favoritos', url: '/favorites', icon: 'favorite' },
-    { title: 'Ofertas', url: '/offers', icon: 'local_offer' },
+    { title: "Vendedores", url: "/sellers", icon: "seller" },
+    { title: "Clientes", url: "/clients", icon: "client" },
+    { title: "Productos", url: "/products", icon: "product" },
+    { title: "Favoritos", url: "/favorites", icon: "favorite" },
+    { title: "Ofertas", url: "/offers", icon: "local_offer" },
     {
-      title: 'Transacciones',
-      url: '/transactions',
-      icon: 'account_balance_wallet',
+      title: "Transacciones",
+      url: "/transactions",
+      icon: "account_balance_wallet",
     },
   ];
   constructor() {}

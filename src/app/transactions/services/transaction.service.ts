@@ -1,8 +1,11 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 export interface Transaction {
-  id: number;
-  type: string; // "Ingreso" o "Gasto"
+  _id?: string;
+  type: string;
   amount: number;
   date: Date;
   description: string;
@@ -12,56 +15,30 @@ export interface Transaction {
   providedIn: "root",
 })
 export class TransactionService {
-  private transactions = signal<Transaction[]>([
-    {
-      id: 1,
-      type: "Ingreso",
-      amount: 1200,
-      date: new Date("2025-04-01"),
-      description: "Venta de laptop a Juan Pérez",
-    },
-    {
-      id: 2,
-      type: "Gasto",
-      amount: 50,
-      date: new Date("2025-04-10"),
-      description: "Compra de mouse inalámbrico",
-    },
-    {
-      id: 3,
-      type: "Ingreso",
-      amount: 250,
-      date: new Date("2025-04-12"),
-      description: "Venta de monitor a Carlos Ruiz",
-    },
-  ]);
+  private API_URL = `${environment.API_URL}/transactions`;
 
-  getTransactions(): Transaction[] {
-    return this.transactions();
+  constructor(private http: HttpClient) {}
+
+  getTransactions(): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(this.API_URL);
   }
 
-  addTransaction(transaction: Transaction) {
-    this.transactions.set([
-      ...this.transactions(),
-      { ...transaction, id: this.generateId() },
-    ]);
+  getTransaction(id: string): Observable<Transaction> {
+    return this.http.get<Transaction>(`${this.API_URL}/${id}`);
   }
 
-  updateTransaction(updatedTransaction: Transaction) {
-    const updated = this.transactions().map((t) =>
-      t.id === updatedTransaction.id ? updatedTransaction : t
-    );
-    this.transactions.set(updated);
+  addTransaction(transaction: Transaction): Observable<Transaction> {
+    return this.http.post<Transaction>(this.API_URL, transaction);
   }
 
-  deleteTransaction(id: number) {
-    const updated = this.transactions().filter((t) => t.id !== id);
-    this.transactions.set(updated);
+  updateTransaction(
+    id: string,
+    transaction: Transaction
+  ): Observable<Transaction> {
+    return this.http.put<Transaction>(`${this.API_URL}/${id}`, transaction);
   }
 
-  private generateId(): number {
-    return this.transactions().length > 0
-      ? Math.max(...this.transactions().map((t) => t.id)) + 1
-      : 1;
+  deleteTransaction(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
   }
 }

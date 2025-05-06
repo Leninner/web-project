@@ -1,32 +1,43 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
+
+export interface Seller {
+  _id?: string;
+  dni: string;
+  name: string;
+  lastname: string;
+  email: string;
+  phone: string;
+  creationDate?: string;
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class SellerService {
-  private sellers = signal<any[]>([
-    { id: 1, dni: 1001, name: 'Juan', lastname: 'Pérez', email: 'juan.perez@example.com', phone: '123456789' },
-    { id: 2, dni: 1002, name: 'María', lastname: 'Gómez', email: 'maria.gomez@example.com', phone: '987654321' },
-    { id: 3, dni: 1003, name: 'Carlos', lastname: 'López', email: 'carlos.lopez@example.com', phone: '456123789' }
-  ]);
+  private API_URL = `${environment.API_URL}/sellers`;
 
-  getSellers(): any[] {
-    return this.sellers();
+  constructor(private http: HttpClient) {}
+
+  getSellers(): Observable<Seller[]> {
+    return this.http.get<Seller[]>(this.API_URL);
   }
 
-  addSeller(seller: any) {
-    this.sellers.set([...this.sellers(), seller]);
+  getSeller(id: string): Observable<Seller> {
+    return this.http.get<Seller>(`${this.API_URL}/${id}`);
   }
 
-  updateSeller(updatedSeller: any) {
-    const updatedList = this.sellers().map(seller =>
-      seller.dni === updatedSeller.dni ? updatedSeller : seller
-    );
-    this.sellers.set(updatedList);
+  addSeller(seller: Seller): Observable<Seller> {
+    return this.http.post<Seller>(this.API_URL, seller);
   }
 
-  deleteSeller(dni: number) {
-    const updatedList = this.sellers().filter(seller => seller.dni !== dni);
-    this.sellers.set(updatedList);
+  updateSeller(id: string, seller: Seller): Observable<Seller> {
+    return this.http.put<Seller>(`${this.API_URL}/${id}`, seller);
+  }
+
+  deleteSeller(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
   }
 }

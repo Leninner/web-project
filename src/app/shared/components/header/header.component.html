@@ -7,17 +7,14 @@
   <div class="user-container">
     <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
       <img src="assets/images/avatar.png" alt="Avatar" class="user-avatar" />
+      <span>{{ userEmail }}</span>
       <mat-icon>keyboard_arrow_down</mat-icon>
     </button>
 
     <mat-menu #userMenu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>account_circle</mat-icon>
-        <span>Mi Perfil</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>settings</mat-icon>
-        <span>Configuración</span>
+      <button mat-menu-item (click)="resetPassword()">
+        <mat-icon>lock_reset</mat-icon>
+        <span>Recuperar Contraseña</span>
       </button>
       <button mat-menu-item (click)="signOut()">
         <mat-icon>logout</mat-icon>

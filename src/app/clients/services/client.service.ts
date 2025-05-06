@@ -1,32 +1,43 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
+
+export interface Client {
+  _id?: string;
+  dni: string;
+  firstname: string;
+  lastname: string;
+  address: string;
+  phone: string;
+  creationDate?: string;
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ClientService {
-  private clients = signal<any[]>([
-    { id: 1, dni: 2001, name: 'Anahi', lastname: 'Martínez', email: 'anahi@example.com', phone: '111222333' },
-    { id: 2, dni: 2002, name: 'Jorge', lastname: 'López', email: 'jorge@example.com', phone: '444555666' },
-    { id: 3, dni: 2003, name: 'Angie', lastname: 'Caiza', email: 'angie@example.com', phone: '777888999' }
-  ]);
+  private API_URL = `${environment.API_URL}/clients`;
 
-  getClients(): any[] {
-    return this.clients();
+  constructor(private http: HttpClient) {}
+
+  getClients(): Observable<Client[]> {
+    return this.http.get<Client[]>(this.API_URL);
   }
 
-  addClient(client: any) {
-    this.clients.set([...this.clients(), client]);
+  getClient(id: string): Observable<Client> {
+    return this.http.get<Client>(`${this.API_URL}/${id}`);
   }
 
-  updateClient(updatedClient: any) {
-    const updatedList = this.clients().map(client =>
-      client.dni === updatedClient.dni ? updatedClient : client
-    );
-    this.clients.set(updatedList);
+  addClient(client: Client): Observable<Client> {
+    return this.http.post<Client>(this.API_URL, client);
   }
 
-  deleteClient(dni: number) {
-    const updatedList = this.clients().filter(client => client.dni !== dni);
-    this.clients.set(updatedList);
+  updateClient(id: string, client: Client): Observable<Client> {
+    return this.http.put<Client>(`${this.API_URL}/${id}`, client);
+  }
+
+  deleteClient(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
   }
 }

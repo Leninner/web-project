@@ -1,10 +1,12 @@
-import { CommonModule, DatePipe, PercentPipe } from "@angular/common";
 import { Component, signal } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
-import { OfferService } from "../../services/offer.service";
 import { MatDialog } from "@angular/material/dialog";
+import { DatePipe, PercentPipe } from "@angular/common";
+
+import { OfferService, Offer } from "../../services/offer.service";
 import { OfferFormComponent } from "../offer-form/offer-form.component";
 import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-modal.component";
 
@@ -23,9 +25,8 @@ import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-m
   styleUrl: "./list-offer.component.css",
 })
 export class ListOfferComponent {
-  offers = signal<any[]>([]);
+  offers = signal<Offer[]>([]);
   displayedColumns: string[] = [
-    "id",
     "name",
     "description",
     "discount",
@@ -39,7 +40,7 @@ export class ListOfferComponent {
   }
 
   loadOffers() {
-    this.offers.set(this.offerService.getOffers());
+    this.offerService.getOffers().subscribe((data) => this.offers.set(data));
   }
 
   openAddModal() {
@@ -47,29 +48,30 @@ export class ListOfferComponent {
       data: null,
       width: "600px",
     });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.offerService.addOffer(result);
-        this.loadOffers();
+        this.offerService.addOffer(result).subscribe(() => this.loadOffers());
       }
     });
   }
 
-  openEditModal(offer: any) {
+  openEditModal(offer: Offer) {
     const dialogRef = this.dialog.open(OfferFormComponent, {
       data: offer,
       width: "600px",
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.offerService.updateOffer(result);
-        this.loadOffers();
+      if (result && offer._id) {
+        this.offerService
+          .updateOffer(offer._id, result)
+          .subscribe(() => this.loadOffers());
       }
     });
   }
 
-  openConfirmModal(offer: any) {
+  openConfirmModal(offer: Offer) {
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
       data: {
         message: `¿Estás seguro de eliminar la oferta "${offer.name}"?`,
@@ -77,9 +79,10 @@ export class ListOfferComponent {
     });
 
     dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        this.offerService.deleteOffer(offer.id);
-        this.loadOffers();
+      if (confirmed && offer._id) {
+        this.offerService
+          .deleteOffer(offer._id)
+          .subscribe(() => this.loadOffers());
       }
     });
   }

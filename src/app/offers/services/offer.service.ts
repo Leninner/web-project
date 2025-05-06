@@ -1,71 +1,42 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 
-
-interface Offer {
-  id: number;
+export interface Offer {
+  _id?: string;
   name: string;
-  description?: string; 
+  description?: string;
   discount?: number;
   startDate?: Date;
   endDate?: Date;
-
 }
 
 @Injectable({
   providedIn: "root",
 })
 export class OfferService {
-  private offers = signal<Offer[]>([
-    {
-      id: 1,
-      name: "Oferta de Verano",
-      description: "Descuentos increíbles en todos nuestros productos.",
-      discount: 0.2,
-      startDate: new Date("2025-06-01"),
-      endDate: new Date("2025-06-30"),
-    },
-    {
-      id: 2,
-      name: "Promoción de Primavera",
-      description: "Llévate un segundo artículo con un 50% de descuento.",
-      discount: 0.5,
-      startDate: new Date("2025-03-15"),
-      endDate: new Date("2025-04-30"),
-    },
-    {
-      id: 3,
-      name: "Liquidación de Temporada",
-      description: "Últimas unidades a precios de remate.",
-      discount: 0.3,
-      startDate: new Date("2025-05-01"),
-      endDate: new Date("2025-05-15"),
-    },
-  ]);
+  private API_URL = `${environment.API_URL}/offers`;
 
-  getOffers(): Offer[] {
-    return this.offers();
+  constructor(private http: HttpClient) {}
+
+  getOffers(): Observable<Offer[]> {
+    return this.http.get<Offer[]>(this.API_URL);
   }
 
-  addOffer(offer: Offer) {
-    this.offers.set([...this.offers(), { ...offer, id: this.generateId() }]);
+  getOffer(id: string): Observable<Offer> {
+    return this.http.get<Offer>(`${this.API_URL}/${id}`);
   }
 
-  updateOffer(updatedOffer: Offer) {
-    const updatedOffers = this.offers().map((offer) =>
-      offer.id === updatedOffer.id ? updatedOffer : offer
-    );
-    this.offers.set(updatedOffers);
+  addOffer(offer: Offer): Observable<Offer> {
+    return this.http.post<Offer>(this.API_URL, offer);
   }
 
-  deleteOffer(id: number) {
-    const updatedOffers = this.offers().filter((offer) => offer.id !== id);
-    this.offers.set(updatedOffers);
+  updateOffer(id: string, offer: Offer): Observable<Offer> {
+    return this.http.put<Offer>(`${this.API_URL}/${id}`, offer);
   }
 
-  // Función auxiliar para generar un ID único (simple para este ejemplo)
-  private generateId(): number {
-    return this.offers().length > 0
-      ? Math.max(...this.offers().map((offer) => offer.id)) + 1
-      : 1;
+  deleteOffer(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
   }
 }

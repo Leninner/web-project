@@ -1,11 +1,12 @@
-<mat-toolbar class="header-toolbar">
-  <div class="menu-options">
-    <bpaz-menu></bpaz-menu>
-  </div>
+<ng-container *ngIf="isLogged">
+  <mat-toolbar class="header-toolbar">
+    <div class="menu-options">
+      <bpaz-menu></bpaz-menu>
+    </div>
+    <bpaz-header></bpaz-header>
+  </mat-toolbar>
+</ng-container>
 
-  <bpaz-header></bpaz-header>
-</mat-toolbar>
-
-<main class="main-content">
+<main class="main-content" [ngClass]="{ 'center-login': !isLogged }">
   <router-outlet></router-outlet>
 </main>

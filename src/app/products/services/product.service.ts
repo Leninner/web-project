@@ -1,40 +1,42 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 export interface Product {
-  id: number;
+  _id?: string;
   name: string;
   description: string;
   price: number;
   stock: number;
+  creationDate?: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ProductService {
-  private products = signal<Product[]>([
-    { id: 1, name: 'Zapatillas Urbanas', description: 'Zapatillas para uso diario', price: 59.99, stock: 10 },
-    { id: 2, name: 'Botas de Montaña', description: 'Resistentes al agua', price: 89.99, stock: 5 },
-    { id: 3, name: 'Sandalias Playeras', description: 'Cómodas y ligeras', price: 24.99, stock: 15 }
-  ]);
+  private API_URL = `${environment.API_URL}/products`;
 
-  getProducts(): Product[] {
-    return this.products();
+  constructor(private http: HttpClient) {}
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.API_URL);
   }
 
-  addProduct(product: Product) {
-    this.products.set([...this.products(), product]);
+  getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.API_URL}/${id}`);
   }
 
-  updateProduct(updatedProduct: Product) {
-    const updatedList = this.products().map(product =>
-      product.id === updatedProduct.id ? updatedProduct : product
-    );
-    this.products.set(updatedList);
+  addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.API_URL, product);
   }
 
-  deleteProduct(id: number) {
-    const updatedList = this.products().filter(product => product.id !== id);
-    this.products.set(updatedList);
+  updateProduct(id: string, product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.API_URL}/${id}`, product);
+  }
+
+  deleteProduct(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
   }
 }

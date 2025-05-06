@@ -1,13 +1,22 @@
-import { Component, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, Inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-  selector: 'app-client-form',
+  selector: "app-client-form",
   standalone: true,
   imports: [
     CommonModule,
@@ -15,10 +24,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
   ],
-  templateUrl: './client-form.component.html',
-  styleUrls: ['./client-form.component.css']
+  templateUrl: "./client-form.component.html",
+  styleUrls: ["./client-form.component.css"],
 })
 export class ClientFormComponent {
   clientForm: FormGroup;
@@ -29,11 +38,11 @@ export class ClientFormComponent {
     @Inject(MAT_DIALOG_DATA) public client: any
   ) {
     this.clientForm = this.fb.group({
-      dni: [this.client?.dni || ''],
-      name: [this.client?.name || ''],
-      lastname: [this.client?.lastname || ''],
-      email: [this.client?.email || ''],
-      phone: [this.client?.phone || '']
+      dni: [this.client?.dni || "", Validators.required],
+      firstname: [this.client?.firstname || "", Validators.required],
+      lastname: [this.client?.lastname || "", Validators.required],
+      address: [this.client?.address || "", Validators.required],
+      phone: [this.client?.phone || ""],
     });
   }
 
@@ -43,7 +52,7 @@ export class ClientFormComponent {
 
   onSave() {
     if (this.clientForm.valid) {
-      this.dialogRef.close(this.clientForm.value);
+      this.dialogRef.close({ ...this.client, ...this.clientForm.value });
     }
   }
 }

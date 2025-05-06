@@ -1,40 +1,44 @@
-<h2 mat-dialog-title style="background-color: rgb(0, 0, 0);">{{ seller?.dni ? 'Editar Vendedor' : 'Agregar Vendedor' }}
+<h2 mat-dialog-title style="background-color: black; color: white">
+  {{ seller?.dni ? "Editar Vendedor" : "Agregar Vendedor" }}
 </h2>
 
 <content class="form-container">
   <form *ngIf="sellerForm" [formGroup]="sellerForm">
-
-
     <mat-form-field appearance="outline" class="full-width">
-      <label>DNI</label>
-      <input matInput formControlName="dni">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="dni" required />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <label>Nombre</label>
-      <input matInput formControlName="name">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <label>Apellido</label>
-      <input matInput formControlName="lastname">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="lastname" required />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <label>Correo Electrónico</label>
-      <input matInput type="email" formControlName="email">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput type="email" formControlName="email" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <label>Teléfono</label>
-      <input matInput type="tel" formControlName="phone">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="phone" />
     </mat-form-field>
   </form>
 </content>
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="sellerForm.invalid">
-    {{ seller?.dni ? 'Actualizar' : 'Agregar' }}
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSave()"
+    [disabled]="sellerForm.invalid"
+  >
+    {{ seller?.dni ? "Actualizar" : "Agregar" }}
   </button>
 </mat-dialog-actions>

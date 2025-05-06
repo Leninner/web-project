@@ -1,15 +1,23 @@
-
 <div class="title">
   <h4>Clientes</h4>
 </div>
 
-<div class="container" style="padding: 20px;">
-  <button mat-raised-button color="primary" (click)="openAddModal()" style="margin-bottom: 16px; background-color: #0505; color: black;">
+<div class="container" style="padding: 20px">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="openAddModal()"
+    style="margin-bottom: 16px; background-color: #0505; color: black"
+  >
     Agregar Cliente
   </button>
 
-  <table mat-table [dataSource]="clients()" class="mat-elevation-z8" style="width: 100%; background-color: white; color: black;">
-
+  <table
+    mat-table
+    [dataSource]="clients()"
+    class="mat-elevation-z8"
+    style="width: 100%; background-color: white; color: black"
+  >
     <!-- DNI -->
     <ng-container matColumnDef="dni">
       <th mat-header-cell *matHeaderCellDef>DNI</th>
@@ -17,9 +25,9 @@
     </ng-container>
 
     <!-- Nombre -->
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="firstname">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.firstname }}</td>
     </ng-container>
 
     <!-- Apellido -->
@@ -28,10 +36,10 @@
       <td mat-cell *matCellDef="let element">{{ element.lastname }}</td>
     </ng-container>
 
-    <!-- Email -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    <!-- Dirección -->
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Dirección</th>
+      <td mat-cell *matCellDef="let element">{{ element.address }}</td>
     </ng-container>
 
     <!-- Teléfono -->
@@ -44,17 +52,43 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" aria-label="Editar" (click)="openEditModal(element)">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Editar"
+          (click)="openEditModal(element)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Eliminar" (click)="openConfirmModal(element)">
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Eliminar"
+          (click)="openConfirmModal(element)"
+        >
           <mat-icon>delete</mat-icon>
         </button>
       </td>
     </ng-container>
 
     <!-- Filas -->
-    <tr mat-header-row *matHeaderRowDef="['dni', 'name', 'lastname', 'email', 'phone', 'actions']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['dni', 'name', 'lastname', 'email', 'phone', 'actions'];"></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="[
+        'dni',
+        'firstname',
+        'lastname',
+        'address',
+        'phone',
+        'actions'
+      ]"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['dni', 'firstname', 'lastname', 'address', 'phone', 'actions']
+      "
+    ></tr>
   </table>
 </div>

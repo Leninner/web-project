@@ -1,30 +1,36 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 export interface Favorite {
-  id: number;
+  _id?: string;
   name: string;
   description: string;
   category: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class FavoriteService {
-  private favorites = signal<Favorite[]>([
-    { id: 1, name: 'Zapatillas Urbanas', description: 'Para uso diario', category: 'Calzado' },
-    { id: 2, name: 'Mochila Outdoor', description: 'Ideal para excursiones', category: 'Accesorios' },
-    { id: 3, name: 'Gorra Casual', description: 'Diseño moderno', category: 'Ropa' }
-  ]);
+  private API_URL = `${environment.API_URL}/favorites`;
 
-  // Obtener la lista de favoritos
-  getFavorites(): Favorite[] {
-    return this.favorites();
+  constructor(private http: HttpClient) {}
+
+  getFavorites(): Observable<Favorite[]> {
+    return this.http.get<Favorite[]>(this.API_URL);
   }
 
-  // Eliminar un favorito por ID
-  deleteFavorite(id: number): void {
-    const updatedList = this.favorites().filter(fav => fav.id !== id);
-    this.favorites.set(updatedList);
+  getFavorite(id: string): Observable<Favorite> {
+    return this.http.get<Favorite>(`${this.API_URL}/${id}`);
+  }
+
+  addFavorite(favorite: Favorite): Observable<Favorite> {
+    return this.http.post<Favorite>(this.API_URL, favorite);
+  }
+
+  deleteFavorite(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
   }
 }

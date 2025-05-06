@@ -1,10 +1,14 @@
-import { CommonModule, CurrencyPipe, DatePipe } from "@angular/common";
 import { Component, signal } from "@angular/core";
+import { CommonModule, DatePipe, CurrencyPipe } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "../../services/transaction.service";
+
+import {
+  TransactionService,
+  Transaction,
+} from "../../services/transaction.service";
 import { TransactionFormComponent } from "../transaction-form/transaction-form.component";
 import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-modal.component";
 
@@ -23,9 +27,8 @@ import { ConfirmationModalComponent } from "../confirmation-modal/confirmation-m
   styleUrl: "./list-transaction.component.css",
 })
 export class ListTransactionComponent {
-  transactions = signal<any[]>([]);
+  transactions = signal<Transaction[]>([]);
   displayedColumns: string[] = [
-    "id",
     "type",
     "amount",
     "date",
@@ -41,7 +44,9 @@ export class ListTransactionComponent {
   }
 
   loadTransactions() {
-    this.transactions.set(this.transactionService.getTransactions());
+    this.transactionService
+      .getTransactions()
+      .subscribe((data) => this.transactions.set(data));
   }
 
   openAddModal() {
@@ -49,39 +54,43 @@ export class ListTransactionComponent {
       data: null,
       width: "600px",
     });
-    dialogRef.afterClosed().subscribe((result) => {
+
+    dialogRef.afterClosed().subscribe((result: Transaction) => {
       if (result) {
-        this.transactionService.addTransaction(result);
-        this.loadTransactions();
+        this.transactionService
+          .addTransaction(result)
+          .subscribe(() => this.loadTransactions());
       }
     });
   }
 
-  openEditModal(transaction: any) {
+  openEditModal(transaction: Transaction) {
     const dialogRef = this.dialog.open(TransactionFormComponent, {
       data: transaction,
       width: "600px",
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.transactionService.updateTransaction(result);
-        this.loadTransactions();
+    dialogRef.afterClosed().subscribe((result: Transaction) => {
+      if (result && transaction._id) {
+        this.transactionService
+          .updateTransaction(transaction._id, result)
+          .subscribe(() => this.loadTransactions());
       }
     });
   }
 
-  openConfirmModal(transaction: any) {
+  openConfirmModal(transaction: Transaction) {
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
       data: {
-        message: `¿Estás seguro de eliminar la transacción #${transaction.id}?`,
+        message: `¿Estás seguro de eliminar la transacción "${transaction.description}"?`,
       },
     });
 
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        this.transactionService.deleteTransaction(transaction.id);
-        this.loadTransactions();
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed && transaction._id) {
+        this.transactionService
+          .deleteTransaction(transaction._id)
+          .subscribe(() => this.loadTransactions());
       }
     });
   }
